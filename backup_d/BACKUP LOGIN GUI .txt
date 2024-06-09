@@ -1,3 +1,5 @@
+BACKUP LOGIN GUI 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,7 +13,7 @@ public class LoginGUI extends JFrame {
 
     public LoginGUI() {
         // Load the image for the first screen
-        String defaultImagePath = "/resources/images/BTLOUFB.jpeg";
+        String defaultImagePath = "/images/BTLOUFB.jpeg";
         URL imageUrl = getClass().getResource(defaultImagePath);
         if (imageUrl != null) {
             try {
@@ -27,7 +29,7 @@ public class LoginGUI extends JFrame {
         initFirstScreen();
 
         //Set the Icon for application (Globally)
-        setIconImage(new ImageIcon(getClass().getResource("/resources/images/TLOC WB.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/images/TLOC WB.png")).getImage());
     }
 
     private void initFirstScreen() {
@@ -87,7 +89,7 @@ public class LoginGUI extends JFrame {
         titleLabel.setBounds(50, 20, titleLabel.getPreferredSize().width, titleLabel.getPreferredSize().height);
 
         // Create the UserID section
-        URL userIdImageUrl = getClass().getResource("/resources/images/PSTB.png");
+        URL userIdImageUrl = getClass().getResource("/images/PSTB.png");
         if (userIdImageUrl != null) {
             ImageIcon userIdIcon = new ImageIcon(userIdImageUrl);
             // Adjust the size of the icon
@@ -127,7 +129,7 @@ public class LoginGUI extends JFrame {
         }
 
         // Create the Password section
-        URL passwordImageUrl = getClass().getResource("/resources/images/Weye.jpg");
+        URL passwordImageUrl = getClass().getResource("/images/Weye.jpg");
         if (passwordImageUrl != null) {
             ImageIcon passwordIcon = new ImageIcon(passwordImageUrl);
             int iconWidth = 30; // Adjust as needed
@@ -174,7 +176,7 @@ public class LoginGUI extends JFrame {
         // Create the Exit button with a custom image
         JButton exitButton = new JButton();
         try {
-            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
+            BufferedImage img = ImageIO.read(getClass().getResource("/images/FirefliesW.png"));
             ImageIcon icon = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
             exitButton.setIcon(icon);
         } catch (IOException e) {
@@ -214,9 +216,3 @@ public class LoginGUI extends JFrame {
         });
     }
 }
-
-
-
-
-
-

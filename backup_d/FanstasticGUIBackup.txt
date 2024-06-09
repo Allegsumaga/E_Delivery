@@ -11,7 +11,7 @@ public class LoginGUI extends JFrame {
 
     public LoginGUI() {
         // Load the image for the first screen
-        String defaultImagePath = "/resources/images/BTLOUFB.jpeg";
+        String defaultImagePath = "/images/BTLOUFB.jpeg";
         URL imageUrl = getClass().getResource(defaultImagePath);
         if (imageUrl != null) {
             try {
@@ -25,18 +25,14 @@ public class LoginGUI extends JFrame {
         }
 
         initFirstScreen();
-
-        //Set the Icon for application (Globally)
-        setIconImage(new ImageIcon(getClass().getResource("/resources/images/TLOC WB.png")).getImage());
     }
 
     private void initFirstScreen() {
         // Set up the JFrame
-        setTitle("The last of Cuisine");
+        setTitle("Image Display Example");
         setSize(650, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setUndecorated(true); //Remove Win Decorations
         setLayout(new BorderLayout());
 
         // Create a JPanel for the first screen
@@ -84,97 +80,62 @@ public class LoginGUI extends JFrame {
         JLabel titleLabel = new JLabel("THE LAST OF CUISINE");
         titleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 24));
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setBounds(50, 20, titleLabel.getPreferredSize().width, titleLabel.getPreferredSize().height);
+        titleLabel.setBounds(250, 20, 150, 30);
 
-        // Create the UserID section
-        URL userIdImageUrl = getClass().getResource("/resources/images/PSTB.png");
-        if (userIdImageUrl != null) {
-            ImageIcon userIdIcon = new ImageIcon(userIdImageUrl);
-            // Adjust the size of the icon
-            int iconWidth = 30; // Adjust as needed
-            int iconHeight = 30; // Adjust as needed
-            Image scaledIcon = userIdIcon.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
-            ImageIcon scaledUserIdIcon = new ImageIcon(scaledIcon);
-            JLabel userIdLabel = new JLabel(scaledUserIdIcon);
-            userIdLabel.setBounds(100, 100, iconWidth, iconHeight);
+        // Create the User ID label and text field
+        JLabel userIdLabel = new JLabel("USER ID:");
+        userIdLabel.setFont(new Font("Press Gothic Regular", Font.PLAIN, 16));
+        userIdLabel.setForeground(Color.WHITE);
+        userIdLabel.setBounds(100, 100, 100, 30);
 
-            // Create the userID text field with pre-text 
-            JTextField userIdField = new JTextField("Ellie Williams");
-            userIdField.setBounds(150, 100, 250, 30); // Adjust the X position
-            userIdField.setBorder(null);
-            userIdField.setBackground(null);
+        //Remove the border and background
+        JTextField userIdField = new JTextField();
+        userIdField.setBounds(200, 100, 250, 30);
+        userIdField.setBorder(null);
+        userIdField.setBackground(null);
 
-            // Add focus listener to the user ID text field
-            userIdField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                    if (userIdField.getText().equals("Ellie Williams")) {
-                        userIdField.setText("");
-                    }
-                }
+        //Create the userID text field with pre-text 
+        JTextField userField = new JTextField("Ellie Williams");
+        userIdField.setBounds(200,100,250,30);
+        userField.setBorder(null);
+        userField.setBackground(null);
 
-                @Override
-                public void focusLost(FocusEvent e) {
-                    if (userIdField.getText().isEmpty()) {
-                        userIdField.setText("Ellie Williams");
-                    }
-                }
-            });
-
-            // Add the user ID label and text field to the second screen panel
-            secondScreenPanel.add(userIdLabel);
-            secondScreenPanel.add(userIdField);
-        }
-
-        // Create the Password section
-        URL passwordImageUrl = getClass().getResource("/resources/images/Weye.jpg");
-        if (passwordImageUrl != null) {
-            ImageIcon passwordIcon = new ImageIcon(passwordImageUrl);
-            int iconWidth = 30; // Adjust as needed
-            int iconHeight = 30; // Adjust as needed
-            Image scaledIcon = passwordIcon.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
-            ImageIcon scaledPasswordIcon = new ImageIcon(scaledIcon);
-            JLabel passwordIconLabel = new JLabel(scaledPasswordIcon);
-            passwordIconLabel.setBounds(100, 150, iconWidth, iconHeight);
-            secondScreenPanel.add(passwordIconLabel);
-        }
-
-        JPasswordField passwordField = new JPasswordField("Password");
-        passwordField.setBounds(150, 150, 250, 30);
-        passwordField.setBorder(null);
-        passwordField.setBackground(null);
-
-        // Add focus listener to the password text field
-        passwordField.addFocusListener(new FocusListener() {
+        //Add focus listener to the user ID text field
+        userIdField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (new String(passwordField.getPassword()).equals("Password")) {
-                    passwordField.setText("");
+                if (userIdField.getText().equals("Ellie Williams")) {
+                    userIdField.setText("");
                 }
             }
-
+        
             @Override
             public void focusLost(FocusEvent e) {
-                if (new String(passwordField.getPassword()).isEmpty()) {
-                    passwordField.setText("Password");
+                if (userIdField.getText().isEmpty()) {
+                    userIdField.setText("Ellie Williams");
                 }
             }
         });
-        secondScreenPanel.add(passwordField);
+
+        // Create the Password label and password field
+        JLabel passwordLabel = new JLabel("PASSWORD:");
+        passwordLabel.setFont(new Font("Press Gothic Regular", Font.PLAIN, 16));
+        passwordLabel.setForeground(Color.WHITE);
+        passwordLabel.setBounds(100, 150, 100, 30);
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(200, 150, 250, 30);
 
         // Create the Login button
         JButton loginButton = new JButton("LOGIN");
         loginButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
         loginButton.setForeground(Color.WHITE);
-        loginButton.setBorder(null);
-        loginButton.setBackground(null);
+        loginButton.setBackground(new Color(0, 102, 204));
         loginButton.setBounds(300, 200, 150, 40);
-        secondScreenPanel.add(loginButton);
 
         // Create the Exit button with a custom image
         JButton exitButton = new JButton();
         try {
-            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
+            BufferedImage img = ImageIO.read(getClass().getResource("/images/FirefliesW.png"));
             ImageIcon icon = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
             exitButton.setIcon(icon);
         } catch (IOException e) {
@@ -189,10 +150,15 @@ public class LoginGUI extends JFrame {
                 System.exit(0);
             }
         });
-        secondScreenPanel.add(exitButton);
 
         // Add components to the second screen panel
         secondScreenPanel.add(titleLabel);
+        secondScreenPanel.add(userIdLabel);
+        secondScreenPanel.add(userIdField);
+        secondScreenPanel.add(passwordLabel);
+        secondScreenPanel.add(passwordField);
+        secondScreenPanel.add(loginButton);
+        secondScreenPanel.add(exitButton);
 
         // Replace the content pane with the second screen panel
         setContentPane(secondScreenPanel);
@@ -214,9 +180,3 @@ public class LoginGUI extends JFrame {
         });
     }
 }
-
-
-
-
-
-

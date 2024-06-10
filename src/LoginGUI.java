@@ -55,7 +55,7 @@ public class LoginGUI extends JFrame {
 
         // Create the label and add it to the center
         JLabel label = new JLabel("PRESS ANY BUTTON", SwingConstants.CENTER);
-        label.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+        label.setFont(new Font("Press Gothic Regular", Font.BOLD, 16)); //ORIGINAL SIZE 16
         label.setForeground(Color.WHITE);
         label.setBounds(0, 275, 650, 50); // Centered vertically
 
@@ -82,7 +82,7 @@ public class LoginGUI extends JFrame {
 
         // Create the Title label
         JLabel titleLabel = new JLabel("THE LAST OF CUISINE");
-        titleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 24));
+        titleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 30));
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setBounds(50, 20, titleLabel.getPreferredSize().width, titleLabel.getPreferredSize().height);
 
@@ -100,6 +100,7 @@ public class LoginGUI extends JFrame {
 
             // Create the userID text field with pre-text 
             JTextField userIdField = new JTextField("Ellie Williams");
+            userIdField.setForeground(Color.WHITE); //Add Foreground to set it visible
             userIdField.setBounds(150, 100, 250, 30); // Adjust the X position
             userIdField.setBorder(null);
             userIdField.setBackground(null);
@@ -141,6 +142,7 @@ public class LoginGUI extends JFrame {
 
         JPasswordField passwordField = new JPasswordField("Password");
         passwordField.setBounds(150, 150, 250, 30);
+        passwordField.setForeground(Color.WHITE); //PREVENTS TO BE INVISIBLE
         passwordField.setBorder(null);
         passwordField.setBackground(null);
 

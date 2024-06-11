@@ -177,12 +177,12 @@ public class LoginGUI extends JFrame {
         JButton exitButton = new JButton();
         try {
             BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
-            ImageIcon icon = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH)); //Original 50x50
             exitButton.setIcon(icon);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        exitButton.setBounds(570, 550, 50, 50);
+        exitButton.setBounds(550, 550, 50, 50); //Original 570 550
         exitButton.setBorderPainted(false); // Remove the border
         exitButton.setFocusPainted(false); // Remove the focus border
         exitButton.setContentAreaFilled(false); // Make content area transparent

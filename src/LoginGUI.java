@@ -311,7 +311,7 @@ public class LoginGUI extends JFrame {
     private void switchToWaitressScreen() {
         // Create a JPanel for the waitress screen (currently a placeholder)
         JPanel waitressScreenPanel = new JPanel();
-        waitressScreenPanel.setBackground(Color.BLACK);
+        waitressScreenPanel.setBackground(Color.BLACK); 
         waitressScreenPanel.setLayout(null);  // Use absolute positioning
 
         // Create the Title label
@@ -344,7 +344,6 @@ public class LoginGUI extends JFrame {
     }
 }
 
-//Silver is waiting to Bronze for merge
 
 
 

@@ -6,11 +6,18 @@ import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
 import models.Log_User; // Import the Log_User model
+//Audio files 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class LoginGUI extends JFrame {
     private BufferedImage defaultImage;
     private JTextField userIdField; // Make userIdField an instance variable
     private JPasswordField passwordField; // Make passwordField an instance variable
+    private Clip audioClip;
 
     public LoginGUI() {
         // Load the image for the first screen
@@ -27,10 +34,41 @@ public class LoginGUI extends JFrame {
             System.err.println("Image not found: " + defaultImagePath);
         }
 
+        // Load the audio file
+        loadAudio("/resources/sound/TLOUMT.wav");
+
+        // Initialize the first screen
         initFirstScreen();
 
         // Set the Icon for application (Globally)
         setIconImage(new ImageIcon(getClass().getResource("/resources/images/TLOC WB.png")).getImage());
+
+        // Play the audio when the application starts
+        playAudio();
+    }
+
+    private void loadAudio(String audioFilePath) {
+        try {
+            URL audioUrl = getClass().getResource(audioFilePath);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioUrl);
+            audioClip = AudioSystem.getClip();
+            audioClip.open(audioStream);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void playAudio() {
+        if (audioClip != null) {
+            audioClip.start();
+        }
+    }
+
+    private void stopAudio() {
+        if (audioClip != null) {
+            audioClip.stop();
+            audioClip.close();
+        }
     }
 
     private void initFirstScreen() {
@@ -69,6 +107,7 @@ public class LoginGUI extends JFrame {
         firstScreenPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                stopAudio();
                 switchToChoiceScreen();
             }
         });
@@ -343,6 +382,7 @@ public class LoginGUI extends JFrame {
         });
     }
 }
+
 
 
 

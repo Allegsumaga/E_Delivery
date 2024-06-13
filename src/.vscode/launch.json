@@ -9,6 +9,13 @@
             "name": "LoginGUI",
             "request": "launch",
             "mainClass": "LoginGUI",
+            "projectName": "src_df286741"
+        },
+        {
+            "type": "java",
+            "name": "LoginGUI",
+            "request": "launch",
+            "mainClass": "LoginGUI",
             "projectName": "src_8145b2ee"
         },
         {

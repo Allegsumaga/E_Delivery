@@ -311,26 +311,91 @@ public class LoginGUI extends JFrame {
         // Create a JPanel for the customer screen
         JPanel customerScreenPanel = new JPanel();
         customerScreenPanel.setBackground(Color.BLACK);
-        customerScreenPanel.setLayout(null);  // Use absolute positioning
-
+        customerScreenPanel.setLayout(new BorderLayout());  // Use BorderLayout for proper menu placement
+    
+        // Create the JMenuBar
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.setBackground(Color.BLACK);
+        menuBar.setForeground(Color.WHITE);
+        menuBar.setBorder(null);
+    
+        // Menu structure
+        JMenu overviewMenu = new JMenu("Overview");
+        overviewMenu.setForeground(Color.WHITE);
+        overviewMenu.setBackground(Color.BLACK);
+        overviewMenu.setOpaque(true);
+        JMenuItem appVersion = new JMenuItem("Version 1.0 Runner");
+        overviewMenu.add(appVersion);
+    
+        JMenu languageMenu = new JMenu("Language");
+        languageMenu.setForeground(Color.WHITE);
+        languageMenu.setBackground(Color.BLACK);
+        languageMenu.setOpaque(true);
+    
+        JMenu aboutUsMenu = new JMenu("About Us");
+        aboutUsMenu.setForeground(Color.WHITE);
+        aboutUsMenu.setBackground(Color.BLACK);
+        aboutUsMenu.setOpaque(true);
+    
+        // Add menus to the menu bar
+        menuBar.add(overviewMenu);
+        menuBar.add(languageMenu);
+        menuBar.add(aboutUsMenu);
+    
+        // Add the menu bar to the panel at the top
+        customerScreenPanel.add(menuBar, BorderLayout.NORTH);
+    
+        // Create a JPanel for the content below the menu
+        JPanel contentPanel = new JPanel();
+        contentPanel.setBackground(Color.BLACK);
+        contentPanel.setLayout(null);  // Use absolute positioning
+    
         // Create the Title label
-        JLabel titleLabel = new JLabel("Dish Options");
+        JLabel titleLabel = new JLabel("Catalan Dishes");
         titleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 30));
         titleLabel.setForeground(Color.WHITE);
-        titleLabel.setBounds(200, 50, 250, 40);
-        customerScreenPanel.add(titleLabel);
-
-        // Sample dish options
-        String[] dishes = {"Dish 1", "Dish 2", "Dish 3"};
+        titleLabel.setBounds(50, 20, 250, 40);
+        contentPanel.add(titleLabel);
+    
+        // Sample dish options with prices
+        String[] dishes = {"Canelons - $12", "Faves a la Catalana - $10", "Fricandó - $15"};
         JList<String> dishList = new JList<>(dishes);
         dishList.setFont(new Font("Press Gothic Regular", Font.PLAIN, 20));
-        dishList.setBounds(200, 150, 250, 150);
-        customerScreenPanel.add(dishList);
-
+        dishList.setForeground(Color.WHITE);
+        dishList.setBackground(Color.BLACK);
+    
+        // Make the dish list scrollable
+        JScrollPane dishScrollPane = new JScrollPane(dishList);
+        dishScrollPane.setBounds(50, 100, 250, 150);
+        dishScrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        contentPanel.add(dishScrollPane);
+    
+        // Basket section
+        JLabel basketTitleLabel = new JLabel("Basket");
+        basketTitleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 30));
+        basketTitleLabel.setForeground(Color.WHITE);
+        basketTitleLabel.setBounds(350, 20, 150, 40);
+        contentPanel.add(basketTitleLabel);
+    
+        try {
+            BufferedImage basketImage = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
+            JLabel basketImageLabel = new JLabel(new ImageIcon(basketImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            basketImageLabel.setBounds(350, 70, 50, 50);
+            contentPanel.add(basketImageLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        JLabel productCountLabel = new JLabel("Products: (0)");
+        productCountLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 20));
+        productCountLabel.setForeground(Color.WHITE);
+        productCountLabel.setBounds(350, 130, 150, 30);
+        contentPanel.add(productCountLabel);
+    
         // Create the Back button to go back to choice screen
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
-        backButton.setBounds(200, 350, 250, 50);
+        backButton.setBounds(50, 350, 150, 50);
         backButton.setForeground(Color.WHITE);
         backButton.setBackground(null);
         backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -340,12 +405,65 @@ public class LoginGUI extends JFrame {
                 switchToChoiceScreen();
             }
         });
-        customerScreenPanel.add(backButton);
-
+        contentPanel.add(backButton);
+    
+        // Create the Checkout button to show products in a JTable
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+        checkoutButton.setBounds(250, 350, 150, 50);
+        checkoutButton.setForeground(Color.WHITE);
+        checkoutButton.setBackground(null);
+        checkoutButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        checkoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showCheckoutTable();
+            }
+        });
+        contentPanel.add(checkoutButton);
+    
+        // Add the content panel to the customer screen panel
+        customerScreenPanel.add(contentPanel, BorderLayout.CENTER);
+    
         // Replace the content pane with the customer screen panel
         setContentPane(customerScreenPanel);
         revalidate(); // Refresh the frame to apply changes
     }
+    
+    private void showCheckoutTable() {
+        // Sample data for the table
+        String[] columnNames = {"Product", "Price"};
+        Object[][] data = {
+            {"Canelons", "$12"},
+            {"Faves a la Catalana", "$10"},
+            {"Fricandó", "$15"}
+        };
+    
+        JTable infoTable = new JTable(data, columnNames);
+        infoTable.setFillsViewportHeight(true);
+        infoTable.setBackground(Color.BLACK);
+        infoTable.setForeground(Color.WHITE);
+        infoTable.setFont(new Font("Press Gothic Regular", Font.PLAIN, 16));
+        infoTable.getTableHeader().setBackground(Color.BLACK);
+        infoTable.getTableHeader().setForeground(Color.WHITE);
+        infoTable.getTableHeader().setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+    
+        JScrollPane tableScrollPane = new JScrollPane(infoTable);
+        tableScrollPane.setPreferredSize(new Dimension(400, 200));
+    
+        JPanel tablePanel = new JPanel();
+        tablePanel.setBackground(Color.BLACK);
+        tablePanel.add(tableScrollPane);
+    
+        JFrame tableFrame = new JFrame("Checkout");
+        tableFrame.setSize(450, 300);
+        tableFrame.setLocationRelativeTo(null);
+        tableFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        tableFrame.add(tablePanel);
+        tableFrame.setVisible(true);
+    }
+       
+       
 
     private void switchToWaitressScreen() {
         // Create a JPanel for the waitress screen (currently a placeholder)

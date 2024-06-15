@@ -358,7 +358,7 @@ public class LoginGUI extends JFrame {
         contentPanel.add(titleLabel);
     
         // Sample dish options with prices
-        String[] dishes = {"Canelons - $12", "Faves a la Catalana - $10", "Fricandó - $15"};
+        String[] dishes = {"Canelons - €12", "Faves a la Catalana - €10", "Fricandó - €15", "Catalan cream - €8", "Botifarra amb mongetes - €5"};
         JList<String> dishList = new JList<>(dishes);
         dishList.setFont(new Font("Press Gothic Regular", Font.PLAIN, 20));
         dishList.setForeground(Color.WHITE);

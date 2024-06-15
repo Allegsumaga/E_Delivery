@@ -12,12 +12,22 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+//Array List data structure 
+import java.util.ArrayList;
+import java.util.List;
+//File Writer 
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class LoginGUI extends JFrame {
     private BufferedImage defaultImage;
     private JTextField userIdField; // Make userIdField an instance variable
     private JPasswordField passwordField; // Make passwordField an instance variable
     private Clip audioClip;
+    //Initialize list to store selected dishes
+    private List<String> selectedDishes = new ArrayList<>();
+    private int dishCount = 0; //Counter for selected
+    private JLabel productCountLabel;
 
     public LoginGUI() {
         // Load the image for the first screen
@@ -158,6 +168,25 @@ public class LoginGUI extends JFrame {
             }
         });
         choiceScreenPanel.add(customerButton);
+
+        JButton exitButton = new JButton();
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(50, 50, Image.SCALE_SMOOTH)); // Original 50x50
+            exitButton.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        exitButton.setBounds(550, 550, 50, 50); // Original 570 550
+        exitButton.setBorderPainted(false); // Remove the border
+        exitButton.setFocusPainted(false); // Remove the focus border
+        exitButton.setContentAreaFilled(false); // Make content area transparent
+        exitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                System.exit(0);
+            }
+        });
+        choiceScreenPanel.add(exitButton);
 
         // Replace the content pane with the choice screen panel
         setContentPane(choiceScreenPanel);
@@ -324,18 +353,45 @@ public class LoginGUI extends JFrame {
         overviewMenu.setForeground(Color.WHITE);
         overviewMenu.setBackground(Color.BLACK);
         overviewMenu.setOpaque(true);
-        JMenuItem appVersion = new JMenuItem("Version 1.0 Runner");
+    
+        // Create the JMenuItem
+        JMenuItem appVersion = new JMenuItem("Version");
         overviewMenu.add(appVersion);
+    
+        // Action Listener
+        appVersion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(LoginGUI.this, "Runner V1.0", "Application Version", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     
         JMenu languageMenu = new JMenu("Language");
         languageMenu.setForeground(Color.WHITE);
         languageMenu.setBackground(Color.BLACK);
         languageMenu.setOpaque(true);
+        JMenuItem KRversion = new JMenuItem("한국어");
+        languageMenu.add(KRversion);
     
         JMenu aboutUsMenu = new JMenu("About Us");
         aboutUsMenu.setForeground(Color.WHITE);
         aboutUsMenu.setBackground(Color.BLACK);
         aboutUsMenu.setOpaque(true);
+    
+        // Add JMenuItem to "About Us"
+        JMenuItem aboutUSItem = new JMenuItem("About us info");
+        aboutUSItem.setForeground(Color.WHITE);
+        aboutUSItem.setBackground(Color.BLACK);
+        aboutUSItem.setOpaque(true);
+        aboutUsMenu.add(aboutUSItem);
+    
+        // Add ActionListener to the JMenuItem
+        aboutUSItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(customerScreenPanel, "Seville, Spain Iberian Industries 2024, Naughty Dogs & Sony Interactive Studios & Magana Enterprise", "The Last Of Cuisine", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     
         // Add menus to the menu bar
         menuBar.add(overviewMenu);
@@ -378,7 +434,7 @@ public class LoginGUI extends JFrame {
         contentPanel.add(basketTitleLabel);
     
         try {
-            BufferedImage basketImage = ImageIO.read(getClass().getResource("/resources/images/Email.png"));
+            BufferedImage basketImage = ImageIO.read(getClass().getResource("/resources/images/CartB.png"));
             JLabel basketImageLabel = new JLabel(new ImageIcon(basketImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             basketImageLabel.setBounds(350, 70, 50, 50);
             contentPanel.add(basketImageLabel);
@@ -386,7 +442,7 @@ public class LoginGUI extends JFrame {
             e.printStackTrace();
         }
     
-        JLabel productCountLabel = new JLabel("Products: (0)");
+        productCountLabel = new JLabel("Products:");
         productCountLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 20));
         productCountLabel.setForeground(Color.WHITE);
         productCountLabel.setBounds(350, 130, 150, 30);
@@ -395,7 +451,7 @@ public class LoginGUI extends JFrame {
         // Create the Back button to go back to choice screen
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
-        backButton.setBounds(50, 350, 150, 50);
+        backButton.setBounds(50, 350, 100, 50);
         backButton.setForeground(Color.WHITE);
         backButton.setBackground(null);
         backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
@@ -407,17 +463,44 @@ public class LoginGUI extends JFrame {
         });
         contentPanel.add(backButton);
     
+        // Create the Add button to add selected product
+        JButton addButton = new JButton("Add");
+        addButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+        addButton.setBounds(170, 350, 100, 50);
+        addButton.setForeground(Color.WHITE);
+        addButton.setBackground(null);
+        addButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Add the selected dish to the basket
+                String selectedDish = dishList.getSelectedValue();
+                if (selectedDish != null) {
+                    if(selectedDishes.size() < 30){
+                        selectedDishes.add(selectedDish);
+                        dishCount++;
+                        productCountLabel.setText("Products: ("+ dishCount + ")");
+                    } else{
+                        JOptionPane.showMessageDialog(LoginGUI.this,"Maximum 30 dishes reached","Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(LoginGUI.this, "Please select a dish to add.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        contentPanel.add(addButton);
+    
         // Create the Checkout button to show products in a JTable
         JButton checkoutButton = new JButton("Checkout");
         checkoutButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
-        checkoutButton.setBounds(250, 350, 150, 50);
+        checkoutButton.setBounds(290, 350, 150, 50);
         checkoutButton.setForeground(Color.WHITE);
         checkoutButton.setBackground(null);
         checkoutButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showCheckoutTable();
+                showCheckoutTable(); // Call showCheckoutTable() instead of showing a JOptionPane
             }
         });
         contentPanel.add(checkoutButton);
@@ -430,15 +513,21 @@ public class LoginGUI extends JFrame {
         revalidate(); // Refresh the frame to apply changes
     }
     
-    private void showCheckoutTable() {
-        // Sample data for the table
-        String[] columnNames = {"Product", "Price"};
-        Object[][] data = {
-            {"Canelons", "$12"},
-            {"Faves a la Catalana", "$10"},
-            {"Fricandó", "$15"}
-        };
     
+    
+    private void showCheckoutTable() {
+        // Convert selectedDishes list to table data
+        String[] columnNames = {"Product", "Price"};
+        Object[][] data = new Object[selectedDishes.size()][2];
+    
+        for (int i = 0; i < selectedDishes.size(); i++) {
+            String dish = selectedDishes.get(i);
+            String[] parts = dish.split(" - "); // Split by " - " to separate name and price
+            data[i][0] = parts[0]; // Product name
+            data[i][1] = parts[1]; // Price
+        }
+    
+        // Create JTable with data
         JTable infoTable = new JTable(data, columnNames);
         infoTable.setFillsViewportHeight(true);
         infoTable.setBackground(Color.BLACK);
@@ -448,22 +537,70 @@ public class LoginGUI extends JFrame {
         infoTable.getTableHeader().setForeground(Color.WHITE);
         infoTable.getTableHeader().setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
     
+        // Create JScrollPane for the table
         JScrollPane tableScrollPane = new JScrollPane(infoTable);
         tableScrollPane.setPreferredSize(new Dimension(400, 200));
     
+        // Create JPanel to hold the table
         JPanel tablePanel = new JPanel();
         tablePanel.setBackground(Color.BLACK);
-        tablePanel.add(tableScrollPane);
+        tablePanel.setLayout(new BorderLayout());
+        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
     
+        // Create Back button to go back to customer screen
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+        backButton.setForeground(Color.WHITE);
+        backButton.setBackground(null);
+        backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                selectedDishes.clear(); // Clear selected dishes for new checkout
+                dishCount = 0;
+                productCountLabel.setText("Products: (" + dishCount + ")");
+                switchToCustomerScreen(); // Go back to customer screen
+            }
+        });
+    
+        // Create Pay button to process payment (placeholder functionality)
+        JButton payButton = new JButton("Pay");
+        payButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
+        payButton.setForeground(Color.WHITE);
+        payButton.setBackground(null);
+        payButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        payButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Write the checkout data to Chef.java
+                try (FileWriter writer = new FileWriter("Chef.java")) {
+                    for (String dish : selectedDishes) {
+                        writer.write(dish + "\n");
+                    }
+                    JOptionPane.showMessageDialog(LoginGUI.this, "Payment processed successfully! Data sent to Chef.java", "Payment", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(LoginGUI.this, "Error writing to Chef.java", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    
+        // Create JPanel for buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.BLACK);
+        buttonPanel.add(backButton);
+        buttonPanel.add(payButton);
+    
+        // Create JFrame to display checkout table
         JFrame tableFrame = new JFrame("Checkout");
         tableFrame.setSize(450, 300);
         tableFrame.setLocationRelativeTo(null);
-        tableFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        tableFrame.add(tablePanel);
+        tableFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose frame on close
+        tableFrame.getContentPane().setBackground(Color.BLACK);
+        tableFrame.setLayout(new BorderLayout());
+        tableFrame.add(tablePanel, BorderLayout.CENTER);
+        tableFrame.add(buttonPanel, BorderLayout.SOUTH);
         tableFrame.setVisible(true);
     }
-       
-       
 
     private void switchToWaitressScreen() {
         // Create a JPanel for the waitress screen (currently a placeholder)
@@ -500,6 +637,7 @@ public class LoginGUI extends JFrame {
         });
     }
 }
+
 
 
 

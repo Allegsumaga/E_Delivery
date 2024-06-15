@@ -378,7 +378,7 @@ public class LoginGUI extends JFrame {
         contentPanel.add(basketTitleLabel);
     
         try {
-            BufferedImage basketImage = ImageIO.read(getClass().getResource("/resources/images/FirefliesW.png"));
+            BufferedImage basketImage = ImageIO.read(getClass().getResource("/resources/images/Email.png"));
             JLabel basketImageLabel = new JLabel(new ImageIcon(basketImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
             basketImageLabel.setBounds(350, 70, 50, 50);
             contentPanel.add(basketImageLabel);

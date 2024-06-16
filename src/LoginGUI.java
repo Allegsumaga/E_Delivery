@@ -154,7 +154,7 @@ public class LoginGUI extends JFrame {
         choiceScreenPanel.add(employeeButton);
 
         // Create the Customer button
-        JButton customerButton = new JButton("Customer");
+        JButton customerButton = new JButton("User");
         customerButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
         customerButton.setBounds(200, 300, 250, 50);
         customerButton.setForeground(Color.WHITE);

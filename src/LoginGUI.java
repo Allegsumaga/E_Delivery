@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import javax.imageio.ImageIO;
+
+import models.Chef;
 import models.Log_User; // Import the Log_User model
 //Audio files 
 import javax.sound.sampled.AudioInputStream;
@@ -15,9 +17,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 //Array List data structure 
 import java.util.ArrayList;
 import java.util.List;
-//File Writer 
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class LoginGUI extends JFrame {
     private BufferedImage defaultImage;
@@ -570,19 +569,21 @@ public class LoginGUI extends JFrame {
         payButton.setBackground(null);
         payButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         payButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Write the checkout data to Chef.java
-                try (FileWriter writer = new FileWriter("Chef.java")) {
-                    for (String dish : selectedDishes) {
-                        writer.write(dish + "\n");
-                    }
-                    JOptionPane.showMessageDialog(LoginGUI.this, "Payment processed successfully! Data sent to Chef.java", "Payment", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(LoginGUI.this, "Error writing to Chef.java", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // Prepare the list of dishes
+        List<String> dishes = new ArrayList<>();
+        for (String dish : selectedDishes) {
+            dishes.add(dish);
+        }
+
+        // Send the dish information to Chef class
+        Chef.receiveOrder(dishes);
+
+        // Optionally show a message or perform other actions
+        JOptionPane.showMessageDialog(LoginGUI.this, "Order sent to Chef successfully!", "Order Sent", JOptionPane.INFORMATION_MESSAGE);
+    }
+});
     
         // Create JPanel for buttons
         JPanel buttonPanel = new JPanel();

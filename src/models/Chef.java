@@ -1,11 +1,5 @@
 package models;
 
-<<<<<<< HEAD
-public class Chef {
-    public static void main(String[] args) {
-        // This main method can be developed later
-        System.out.println("Chef.java data receiver.");
-=======
 import java.util.List;
 
 public class Chef {
@@ -16,7 +10,6 @@ public class Chef {
             System.out.println("- " + dish);
             // Add your logic to handle each dish (e.g., prepare, cook, etc.)
         }
->>>>>>> bronze
     }
 }
 

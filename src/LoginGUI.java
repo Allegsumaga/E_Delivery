@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import models.Chef;
 import models.Log_User; // Import the Log_User model
+import models.Waitress;
 //Audio files 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -577,8 +578,13 @@ public class LoginGUI extends JFrame {
             dishes.add(dish);
         }
 
+        Chef chef = new Chef();
+
+        chef.updateOrder(dishes);
+
+        chef.setVisible(true);
         // Send the dish information to Chef class
-        Chef.receiveOrder(dishes);
+        //Chef.receiveOrder(dishes);
 
         // Optionally show a message or perform other actions
         JOptionPane.showMessageDialog(LoginGUI.this, "Order sent to Chef successfully!", "Order Sent", JOptionPane.INFORMATION_MESSAGE);
@@ -603,26 +609,18 @@ public class LoginGUI extends JFrame {
         tableFrame.setVisible(true);
     }
 
-    private void switchToWaitressScreen() {
-        // Create a JPanel for the waitress screen (currently a placeholder)
-        JPanel waitressScreenPanel = new JPanel();
-        waitressScreenPanel.setBackground(Color.BLACK);
-        waitressScreenPanel.setLayout(null);  // Use absolute positioning
-
-        // Create the Title label
-        JLabel titleLabel = new JLabel("Waitress Screen");
-        titleLabel.setFont(new Font("Press Gothic Regular", Font.BOLD, 30));
-        titleLabel.setForeground(Color.WHITE);
-        titleLabel.setBounds(200, 50, 250, 40);
-        waitressScreenPanel.add(titleLabel);
-
-        // Add more components as needed for the waitress screen
-
-        // Replace the content pane with the waitress screen panel
-        setContentPane(waitressScreenPanel);
-        revalidate(); // Refresh the frame to apply changes
+    protected void switchToWaitressScreen() {
+        // Call the static method from Waitress class
+        Waitress.waitressMethod();
+    
+        // Create a new instance of Waitress and set it visible
+        Waitress waitress = new Waitress();
+        waitress.setVisible(true);
+    
+        // Close the current window (optional)
+        dispose();
     }
-
+    
     private BufferedImage scaleImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
         BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = resizedImage.createGraphics();

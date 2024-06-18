@@ -181,6 +181,15 @@ public class LoginGUI extends JFrame {
         exitButton.setBorderPainted(false); // Remove the border
         exitButton.setFocusPainted(false); // Remove the focus border
         exitButton.setContentAreaFilled(false); // Make content area transparent
+        // Custom Cursor
+        try {
+            BufferedImage cursorImage = ImageIO.read(getClass().getResource("/resources/images/XButtonPS.png"));
+            Image scaledCursorImage = cursorImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH); // Scale to 32x32
+            Cursor customCursor = Toolkit.getDefaultToolkit().createCustomCursor(scaledCursorImage, new Point(0, 0), "customCursor");
+            exitButton.setCursor(customCursor);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 System.exit(0);
@@ -570,26 +579,28 @@ public class LoginGUI extends JFrame {
         payButton.setBackground(null);
         payButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         payButton.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // Prepare the list of dishes
-        List<String> dishes = new ArrayList<>();
-        for (String dish : selectedDishes) {
-            dishes.add(dish);
-        }
-
-        Chef chef = new Chef();
-
-        chef.updateOrder(dishes);
-
-        chef.setVisible(true);
-        // Send the dish information to Chef class
-        //Chef.receiveOrder(dishes);
-
-        // Optionally show a message or perform other actions
-        JOptionPane.showMessageDialog(LoginGUI.this, "Order sent to Chef successfully!", "Order Sent", JOptionPane.INFORMATION_MESSAGE);
-    }
-});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Prepare the list of dishes
+                List<String> dishes = new ArrayList<>();
+                for (String dish : selectedDishes) {
+                    dishes.add(dish);
+                }
+    
+                // Assuming Chef class is a singleton or has a single instance
+                Chef chef = Chef.getInstance();
+                chef.updateOrder(dishes);
+    
+                // Optionally show a message or perform other actions
+                JOptionPane.showMessageDialog(LoginGUI.this, "Order sent to Chef successfully!", "Order Sent", JOptionPane.INFORMATION_MESSAGE);
+    
+                // Clear the selected dishes after sending the order
+                selectedDishes.clear();
+                dishCount = 0;
+                productCountLabel.setText("Products: (" + dishCount + ")");
+                switchToCustomerScreen(); // Go back to customer screen
+            }
+        });
     
         // Create JPanel for buttons
         JPanel buttonPanel = new JPanel();
@@ -608,6 +619,7 @@ public class LoginGUI extends JFrame {
         tableFrame.add(buttonPanel, BorderLayout.SOUTH);
         tableFrame.setVisible(true);
     }
+    
 
     protected void switchToWaitressScreen() {
         // Call the static method from Waitress class

@@ -1,7 +1,10 @@
 package models;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +34,11 @@ public class Waitress extends JFrame {
     private JLabel jLabel1;
     private JPanel jPanel1;
     private JButton jButton2;
+    private JButton jButton3; // New button for Hamburger
+    private JButton jButton4; // New button for Pizza
+    private JButton jButton5;// Sushi
+    private JButton jButton6; // Lobster
+    private JButton jButton7; // Paella
     private JPanel jPanel3;
     private JLabel jLabel3;
     private JPanel jPanel4;
@@ -47,7 +55,7 @@ public class Waitress extends JFrame {
     public Waitress() {
         initComponents();  // Initialize components first
         waitressMethod();   // Then call static method
-        chef = new Chef();  // Instantiate the Chef class
+        chef = Chef.getInstance();  // Get the singleton instance of Chef
         chef.setVisible(true);  // Show the Chef window
     }
 
@@ -73,7 +81,7 @@ public class Waitress extends JFrame {
     // Method to add an item to the current order
     private void agregarItem(String item, int precio) {
         orden += "\n" + item;
-        jt_preorden.append("\n" + item + " ------------ $" + precio);
+        jt_preorden.append("\n" + item + " ------------ €" + precio);
         total += precio;
     }
 
@@ -96,9 +104,95 @@ public class Waitress extends JFrame {
         jLabel1 = new JLabel();
         jPanel1 = new JPanel(new GridLayout(3, 3));
 
-        jButton2 = new JButton("Sushi");
-        jButton2.addActionListener(evt -> agregarItem("Sushi", 100));
+        jButton2 = new JButton("");
+        jButton2.addActionListener(evt -> agregarItem("Onigiri", 3));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/OnigiriB.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton2.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton2.setBorderPainted(false); // Remove the border
+        jButton2.setFocusPainted(false); // Remove the focus border
+        jButton2.setContentAreaFilled(false); // Make content area transparent
         jPanel1.add(jButton2);
+
+        jButton3 = new JButton(""); // New button for Hamburger
+        jButton3.addActionListener(evt -> agregarItem("Hamburger", 15));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/HM.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton3.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton3.setBorderPainted(false); // Remove the border
+        jButton3.setFocusPainted(false); // Remove the focus border
+        jButton3.setContentAreaFilled(false); // Make content area transparent
+        jPanel1.add(jButton3);
+
+        jButton4 = new JButton("");
+        jButton4.addActionListener(evt -> agregarItem("Pizza", 20));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/pizzaB.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton4.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton4.setBorderPainted(false); // Remove the border
+        jButton4.setFocusPainted(false); // Remove the focus border
+        jButton4.setContentAreaFilled(false); // Make content area transparent
+        jPanel1.add(jButton4);
+
+        jButton5 = new JButton(""); 
+        jButton5.addActionListener(evt -> agregarItem("Sushi", 35));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/sushim.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton5.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton5.setBorderPainted(false); // Remove the border
+        jButton5.setFocusPainted(false); // Remove the focus border
+        jButton5.setContentAreaFilled(false); // Make content area transparent
+        jPanel1.add(jButton5);
+
+        jButton6 = new JButton(""); 
+        jButton6.addActionListener(evt -> agregarItem("Lobster", 56));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/lobster.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton6.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton6.setBorderPainted(false); // Remove the border
+        jButton6.setFocusPainted(false); // Remove the focus border
+        jButton6.setContentAreaFilled(false); // Make content area transparent
+        jPanel1.add(jButton6);
+
+        jButton7 = new JButton("");
+        jButton7.addActionListener(evt -> agregarItem("Paella", 28));
+        try {
+            BufferedImage img = ImageIO.read(getClass().getResource("/resources/images/paella.png"));
+            ImageIcon icon = new ImageIcon(img.getScaledInstance(30, 30, Image.SCALE_SMOOTH)); // Adjust size
+            jButton7.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        jButton7.setBorderPainted(false); // Remove the border
+        jButton7.setFocusPainted(false); // Remove the focus border
+        jButton7.setContentAreaFilled(false); // Make content area transparent
+        jPanel1.add(jButton7);
 
         // Add other buttons similarly
 
@@ -107,7 +201,11 @@ public class Waitress extends JFrame {
         jPanel4 = new JPanel();
         jc_pedido = new JComboBox<>(new String[]{"Para llevar", "En el local"});
         jt_preorden = new JTextArea();
+        //Add preferred size
+        //jt_preorden.setPreferredSize(new Dimension(100,100)); //Preferred Size size for JTextArea
         jScrollPane1 = new JScrollPane(jt_preorden);
+        //Preferred size
+        //jScrollPane1.setPreferredSize(new Dimension(5,50)); //PS for JScrollPane
         jSeparator1 = new JSeparator();
         jLabel4 = new JLabel();
         total_pedido = new JLabel();
@@ -131,7 +229,7 @@ public class Waitress extends JFrame {
             if (total == 0) {
                 JOptionPane.showMessageDialog(null, "No se han agregado artículos");
             } else {
-                total_pedido.setText("$ " + total);
+                total_pedido.setText("€ " + total);
             }
         });
 
@@ -166,6 +264,7 @@ public class Waitress extends JFrame {
         jPanel4.add(jButton1);
         getContentPane().add(jPanel4, BorderLayout.EAST);
 
+
         pack();
         setLocationRelativeTo(null);
     }
@@ -175,6 +274,9 @@ public class Waitress extends JFrame {
         java.awt.EventQueue.invokeLater(() -> new Waitress().setVisible(true));
     }
 }
+
+
+
 
 
 

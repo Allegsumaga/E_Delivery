@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Chef extends JFrame {
 
+    private static Chef instance; // Singleton instance
+
     private JPanel jPanel1;
     private JPanel jPanel2;
     private JLabel jLabel1;
@@ -15,8 +17,23 @@ public class Chef extends JFrame {
     private JTextArea jta5;
     private JTextArea jta6;
 
-    public Chef() {
+    private JCheckBox jcb1;
+    private JCheckBox jcb2;
+    private JCheckBox jcb3;
+    private JCheckBox jcb4;
+    private JCheckBox jcb5;
+    private JCheckBox jcb6;
+
+    private Chef() {
         initComponents();  // Initialize GUI components
+    }
+
+    // Method to get the singleton instance of Chef
+    public static synchronized Chef getInstance() {
+        if (instance == null) {
+            instance = new Chef();
+        }
+        return instance;
     }
 
     private void initComponents() {
@@ -29,6 +46,12 @@ public class Chef extends JFrame {
         jta4 = new JTextArea();
         jta5 = new JTextArea();
         jta6 = new JTextArea();
+        jcb1 = new JCheckBox();
+        jcb2 = new JCheckBox();
+        jcb3 = new JCheckBox();
+        jcb4 = new JCheckBox();
+        jcb5 = new JCheckBox();
+        jcb6 = new JCheckBox();
         JButton jButton1 = new JButton();
         JButton jButton2 = new JButton();
         JButton jButton3 = new JButton();
@@ -57,23 +80,53 @@ public class Chef extends JFrame {
         jta5.setText("No hay ordenes aquí.");
         jta6.setText("No hay ordenes aquí.");
 
-        jButton1.setText("TAKE");
-        jButton1.addActionListener(evt -> jta1.setText(""));
+        jButton1.setText("DONE");
+        jButton1.addActionListener(evt -> {
+            if (jcb1.isSelected()) {
+                jta1.setText("No hay ordenes aquí.");
+                jcb1.setSelected(false);
+            }
+        });
 
-        jButton2.setText("TAKE");
-        jButton2.addActionListener(evt -> jta2.setText(""));
+        jButton2.setText("DONE");
+        jButton2.addActionListener(evt -> {
+            if (jcb2.isSelected()) {
+                jta2.setText("No hay ordenes aquí.");
+                jcb2.setSelected(false);
+            }
+        });
 
-        jButton3.setText("TAKE");
-        jButton3.addActionListener(evt -> jta3.setText(""));
+        jButton3.setText("DONE");
+        jButton3.addActionListener(evt -> {
+            if (jcb3.isSelected()) {
+                jta3.setText("No hay ordenes aquí.");
+                jcb3.setSelected(false);
+            }
+        });
 
-        jButton5.setText("TAKE");
-        jButton5.addActionListener(evt -> jta4.setText(""));
+        jButton5.setText("DONE");
+        jButton5.addActionListener(evt -> {
+            if (jcb4.isSelected()) {
+                jta4.setText("No hay ordenes aquí.");
+                jcb4.setSelected(false);
+            }
+        });
 
-        jButton6.setText("TAKE");
-        jButton6.addActionListener(evt -> jta5.setText(""));
+        jButton6.setText("DONE");
+        jButton6.addActionListener(evt -> {
+            if (jcb5.isSelected()) {
+                jta5.setText("No hay ordenes aquí.");
+                jcb5.setSelected(false);
+            }
+        });
 
-        jButton7.setText("TAKE");
-        jButton7.addActionListener(evt -> jta6.setText(""));
+        jButton7.setText("DONE");
+        jButton7.addActionListener(evt -> {
+            if (jcb6.isSelected()) {
+                jta6.setText("No hay ordenes aquí.");
+                jcb6.setSelected(false);
+            }
+        });
 
         GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -90,6 +143,14 @@ public class Chef extends JFrame {
                         .addComponent(jta6))
                     .addGap(18, 18, 18)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(jcb1)
+                        .addComponent(jcb2)
+                        .addComponent(jcb3)
+                        .addComponent(jcb4)
+                        .addComponent(jcb5)
+                        .addComponent(jcb6))
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(jButton1)
                         .addComponent(jButton2)
                         .addComponent(jButton3)
@@ -104,27 +165,33 @@ public class Chef extends JFrame {
                     .addGap(26, 26, 26)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addComponent(jcb1))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2))
+                        .addComponent(jButton2)
+                        .addComponent(jcb2))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3))
+                        .addComponent(jButton3)
+                        .addComponent(jcb3))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton5))
+                        .addComponent(jButton5)
+                        .addComponent(jcb4))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6))
+                        .addComponent(jButton6)
+                        .addComponent(jcb5))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(jta6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7))
+                        .addComponent(jButton7)
+                        .addComponent(jcb6))
                     .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -178,8 +245,10 @@ public class Chef extends JFrame {
 
     // Main method
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(() -> new Chef().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> Chef.getInstance().setVisible(true));
     }
 }
+
+
 
 

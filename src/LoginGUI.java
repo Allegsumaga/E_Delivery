@@ -140,12 +140,13 @@ public class LoginGUI extends JFrame {
         choiceScreenPanel.add(titleLabel);
 
         // Create the Employee button
-        JButton employeeButton = new JButton("Employee");
+        JButton employeeButton = new JButton("Fireflies");
         employeeButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
         employeeButton.setBounds(200, 200, 250, 50);
         employeeButton.setForeground(Color.WHITE);
         employeeButton.setBackground(null);
-        employeeButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        employeeButton.setBorder(null);
+        //employeeButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         employeeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -155,12 +156,13 @@ public class LoginGUI extends JFrame {
         choiceScreenPanel.add(employeeButton);
 
         // Create the Customer button
-        JButton customerButton = new JButton("User");
+        JButton customerButton = new JButton("Survivor");
         customerButton.setFont(new Font("Press Gothic Regular", Font.BOLD, 16));
         customerButton.setBounds(200, 300, 250, 50);
         customerButton.setForeground(Color.WHITE);
         customerButton.setBackground(null);
-        customerButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        customerButton.setBorder(null);
+        //customerButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         customerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -330,7 +332,16 @@ public class LoginGUI extends JFrame {
         exitButton.setBorderPainted(false); // Remove the border
         exitButton.setFocusPainted(false); // Remove the focus border
         exitButton.setContentAreaFilled(false); // Make content area transparent
-        exitButton.addActionListener(new ActionListener() {
+        // Custom Cursor
+        try {
+            BufferedImage cursorImage = ImageIO.read(getClass().getResource("/resources/images/XButtonPS.png"));
+            Image scaledCursorImage = cursorImage.getScaledInstance(32, 32, Image.SCALE_SMOOTH); // Scale to 32x32
+            Cursor customCursor = Toolkit.getDefaultToolkit().createCustomCursor(scaledCursorImage, new Point(0, 0), "customCursor");
+            exitButton.setCursor(customCursor);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        exitButton.addActionListener(new ActionListener() {    
             public void actionPerformed(ActionEvent evt) {
                 System.exit(0);
             }
@@ -463,7 +474,8 @@ public class LoginGUI extends JFrame {
         backButton.setBounds(50, 350, 100, 50);
         backButton.setForeground(Color.WHITE);
         backButton.setBackground(null);
-        backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        backButton.setBorder(null);
+        //backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -478,7 +490,8 @@ public class LoginGUI extends JFrame {
         addButton.setBounds(170, 350, 100, 50);
         addButton.setForeground(Color.WHITE);
         addButton.setBackground(null);
-        addButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        addButton.setBorder(null);
+        //addButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -505,7 +518,8 @@ public class LoginGUI extends JFrame {
         checkoutButton.setBounds(290, 350, 150, 50);
         checkoutButton.setForeground(Color.WHITE);
         checkoutButton.setBackground(null);
-        checkoutButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        checkoutButton.setBorder(null);
+        //checkoutButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
         checkoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

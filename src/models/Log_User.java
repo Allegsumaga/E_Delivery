@@ -9,10 +9,10 @@ public class Log_User {
 
     // List of valid users
     private static final List<Log_User> validUsers = Arrays.asList(
-        new Log_User("Ellie Williams", "password123"),
-        new Log_User("Joel Miller", "password456"),
-        new Log_User("Tommy Miller", "password789"),
-        new Log_User("Abby Anderson", "password101")
+        new Log_User("Ellie Williams", "ew001"),
+        new Log_User("Joel Miller", "jm002"),
+        new Log_User("Tommy Miller", "tm003"),
+        new Log_User("Abby Anderson", "aa004")
     );
 
     public Log_User(String user, String password) {
